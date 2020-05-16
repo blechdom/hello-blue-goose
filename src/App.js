@@ -1,22 +1,25 @@
 import React from 'react';
 import NavBar from "./components/NavBar";
-import { useAuth0 } from "./react-auth0-spa";
-import logo from './logo.svg';
+import { Router, Route, Switch } from "react-router-dom";
+import Home from "./components/Home";
+import PrivateRoute from "./components/PrivateRoute";
+import Profile from "./components/Profile";
+import history from "./utils/history";
 import './App.css';
 
 function App() {
-  const { loading } = useAuth0();
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <NavBar />
-      <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      <Router history={history}>
+        <header>
+          <NavBar />
+        </header>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <PrivateRoute path="/profile" component={Profile} />
+        </Switch>
+      </Router>
     </div>
   );
 }
