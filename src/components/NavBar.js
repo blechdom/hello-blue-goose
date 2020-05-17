@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import theme from "../theme";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +25,7 @@ const NavBar = () => {
         <Toolbar>
           {isAuthenticated && (
             <div>
-              <Button component={Link} to="/" color="inherit">
+              <Button component={Link} to="/hello-blue-goose" color="inherit">
                 Hello Blue Goose
               </Button>
               <Button component={Link} to="/feed" color="inherit">

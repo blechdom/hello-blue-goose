@@ -15,7 +15,7 @@ function App() {
           <NavBar />
         </header>
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route path="/hello-blue-goose" exact component={Home} />
           <PrivateRoute path="/profile" component={Profile} />
           <Route path="/feed" component={Feed} />
         </Switch>

@@ -22,7 +22,11 @@ ReactDOM.render(
   <Auth0Provider
     domain={config.domain}
     client_id={config.clientId}
-    redirect_uri={window.location.origin}
+    redirect_uri={
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/hello-blue-goose/"
+        : "https://blechdom.github.io/hello-blue-goose/"
+    }
     onRedirectCallback={onRedirectCallback}
   >
     <ThemeProvider theme={theme}>

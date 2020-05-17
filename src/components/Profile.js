@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const classes = useStyles();
-  const theme = useTheme();
   const { loading, user } = useAuth0();
 
   if (loading || !user) {
