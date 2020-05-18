@@ -15,8 +15,8 @@ function App() {
         </header>
         <Switch>
           <Route path="/hello-blue-goose" exact component={Home} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/feed" component={Feed} />
+          <Route path="/hello-blue-goose/profile" component={Profile} />
+          <Route path="/hello-blue-goose/feed" component={Feed} />
         </Switch>
       </Router>
     </div>

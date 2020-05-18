@@ -25,10 +25,18 @@ const NavBar = () => {
             <Button component={Link} to="/hello-blue-goose" color="inherit">
               Hello Blue Goose
             </Button>
-            <Button component={Link} to="/feed" color="inherit">
+            <Button
+              component={Link}
+              to="/hello-blue-goose/feed"
+              color="inherit"
+            >
               Feed
             </Button>
-            <Button component={Link} to="/profile" color="inherit">
+            <Button
+              component={Link}
+              to="/hello-blue-goose/profile"
+              color="inherit"
+            >
               Profile
             </Button>
           </div>
