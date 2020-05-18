@@ -2,16 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import { useAuth0 } from "../react-auth0-spa";
 
 const Feed = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const { loading, user } = useAuth0();
-
-  if (loading || !user) {
-    return <div>Loading...</div>;
-  }
 
   const handleNameChange = (event) => {
     setName(event.target.value);

@@ -4,36 +4,13 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { Auth0Provider } from "./react-auth0-spa";
-import config from "./auth_config.json";
-import history from "./utils/history";
 import theme from "./theme";
 
-const onRedirectCallback = (appState) => {
-  console.log("appState ", appState);
-  history.push(
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-  );
-};
-
 ReactDOM.render(
-  <Auth0Provider
-    domain={config.domain}
-    client_id={config.clientId}
-    redirect_uri={
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000/hello-blue-goose/"
-        : "https://blechdom.github.io/hello-blue-goose/"
-    }
-    onRedirectCallback={onRedirectCallback}
-  >
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </Auth0Provider>,
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <App />
+  </ThemeProvider>,
   document.getElementById("root")
 );
 
