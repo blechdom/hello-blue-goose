@@ -23,7 +23,7 @@ const Feed = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await axios.post(
-      "https://je56gkvc39.execute-api.us-east-2.amazonaws.com/default/hbgFunction",
+      "https://jy7gj0jnx3.execute-api.us-east-2.amazonaws.com/default/hbgFunction",
       { key1: `${name}, ${email}` }
     );
   };
