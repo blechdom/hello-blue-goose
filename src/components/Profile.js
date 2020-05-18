@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth0 } from "../react-auth0-spa";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -34,12 +34,12 @@ const Profile = () => {
 
   return (
     <div style={{ width: "100%" }}>
-      <Box display="flex" justifyContent="center" display="block" m={4} p={4}>
+      <Box display="flex" justifyContent="center" m={4} p={4}>
         <Typography variant="h3" color="primary">
           Profile
         </Typography>
       </Box>
-      <Box display="flex" justifyContent="center" display="block" m={4} p={4}>
+      <Box display="flex" justifyContent="center" m={4} p={4}>
         <Card className={classes.root} m={4} p={4}>
           <CardMedia
             className={classes.cover}

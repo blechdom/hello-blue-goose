@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./components/NavBar";
 import { Router, Route, Switch } from "react-router-dom";
+
 import Feed from "./components/Feed";
 import Home from "./components/Home";
 import PrivateRoute from "./components/PrivateRoute";
