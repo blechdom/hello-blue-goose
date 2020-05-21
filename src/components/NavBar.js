@@ -39,6 +39,20 @@ const NavBar = () => {
             >
               Profile
             </Button>
+            <Button
+              component={Link}
+              to="/hello-blue-goose/todo"
+              color="inherit"
+            >
+              Todo
+            </Button>
+            <Button
+              component={Link}
+              to="/hello-blue-goose/auth"
+              color="inherit"
+            >
+              Auth
+            </Button>
           </div>
         </Toolbar>
       </AppBar>

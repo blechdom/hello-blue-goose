@@ -1,0 +1,15 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-hellobluegoose-dev-143256-authRole",
+            "UnauthRoleArn": "arn:aws:iam::642815508926:role/amplify-hellobluegoose-dev-143256-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::642815508926:role/amplify-hellobluegoose-dev-143256-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-hellobluegoose-dev-143256-deployment",
+            "UnauthRoleName": "amplify-hellobluegoose-dev-143256-unauthRole",
+            "StackName": "amplify-hellobluegoose-dev-143256",
+            "StackId": "arn:aws:cloudformation:us-west-2:642815508926:stack/amplify-hellobluegoose-dev-143256/a57427a0-9baa-11ea-9174-06bfbb1996ee",
+            "AmplifyAppId": "d3g68kghn68d9g"
+        }
+    }
+}

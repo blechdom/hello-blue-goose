@@ -13,11 +13,13 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.8.1",
+    "@aws-amplify/ui-react": "^0.2.6",
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "aws-amplify": "^3.0.11",
     "aws-sdk": "^2.679.0",
     "axios": "^0.19.2",
     "react": "^16.13.1",
