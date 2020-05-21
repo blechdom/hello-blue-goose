@@ -2,27 +2,15 @@
 
 ### Live Site
 
-[blechdom.github.io/hello-blue-goose](https://blechdom.github.io/hello-blue-goose)
-
-##### Deploy to Live Site
-
-### Local Dev
-
-```bash
-npm i
-```
-
-```bash
-NODE_ENV=development npm start
-```
+[https://www.hellobluegoose](https://www.hellobluegoose)
 
 ## Tools
 
+- AWS Amplify
 - AWS Lambda
 - AWS DynamoDB
 - API Gateway
-- Github Pages
+- GraphQL
 - Create-React-App
 - Material-UI
-- Auth0
 - Axios
