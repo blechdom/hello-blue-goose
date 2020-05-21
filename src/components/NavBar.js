@@ -22,35 +22,19 @@ const NavBar = () => {
       <AppBar position="static">
         <Toolbar>
           <div>
-            <Button component={Link} to="/hello-blue-goose" color="inherit">
+            <Button component={Link} to="" color="inherit">
               Hello Blue Goose
             </Button>
-            <Button
-              component={Link}
-              to="/hello-blue-goose/feed"
-              color="inherit"
-            >
+            <Button component={Link} to="/feed" color="inherit">
               Feed
             </Button>
-            <Button
-              component={Link}
-              to="/hello-blue-goose/profile"
-              color="inherit"
-            >
+            <Button component={Link} to="/profile" color="inherit">
               Profile
             </Button>
-            <Button
-              component={Link}
-              to="/hello-blue-goose/todo"
-              color="inherit"
-            >
+            <Button component={Link} to="/todo" color="inherit">
               Todo
             </Button>
-            <Button
-              component={Link}
-              to="/hello-blue-goose/auth"
-              color="inherit"
-            >
+            <Button component={Link} to="/auth" color="inherit">
               Auth
             </Button>
           </div>

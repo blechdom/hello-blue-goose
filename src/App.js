@@ -16,11 +16,11 @@ function App() {
           <NavBar />
         </header>
         <Switch>
-          <Route path="/hello-blue-goose" exact component={Home} />
-          <Route path="/hello-blue-goose/profile" component={Profile} />
-          <Route path="/hello-blue-goose/feed" component={Feed} />
-          <Route path="/hello-blue-goose/todo" component={Todo} />
-          <Route path="/hello-blue-goose/auth" component={Auth} />
+          <Route path="/" exact component={Home} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/feed" component={Feed} />
+          <Route path="/todo" component={Todo} />
+          <Route path="/auth" component={Auth} />
         </Switch>
       </Router>
     </div>
