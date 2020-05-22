@@ -5,7 +5,7 @@ import { listTodos } from "../graphql/queries";
 
 const initialState = { name: "", description: "" };
 
-const Auth = () => {
+const Todo = () => {
   const [formState, setFormState] = useState(initialState);
   const [todos, setTodos] = useState([]);
 
@@ -95,4 +95,4 @@ const styles = {
   },
 };
 
-export default Auth;
+export default Todo;

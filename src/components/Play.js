@@ -2,16 +2,14 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-const Profile = () => {
+const Play = () => {
   return (
-    <div style={{ width: "100%" }}>
+    <div>
       <Box display="flex" justifyContent="center" m={4} p={4}>
-        <Typography variant="h3" color="primary">
-          Profile
-        </Typography>
+        <Typography variant="h1">Play</Typography>
       </Box>
     </div>
   );
 };
 
-export default Profile;
+export default Play;

@@ -3,3 +3,18 @@ type Todo @model {
   name: String!
   description: String
 }
+
+type Instructions @model {
+  id: ID!
+  name: String!
+  spoken_text: String
+}
+
+type Rules @model {
+  id: ID!
+  name: String!
+  can_come_before: [String]
+  can_come_after: [String]
+  cannot_come_before: [String]
+  cannot_come_after: [String]
+}
