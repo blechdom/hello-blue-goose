@@ -34,42 +34,48 @@ export const onDeleteTodo = /* GraphQL */ `
     }
   }
 `;
-export const onCreateInstructions = /* GraphQL */ `
-  subscription OnCreateInstructions {
-    onCreateInstructions {
+export const onCreateInstruction = /* GraphQL */ `
+  subscription OnCreateInstruction {
+    onCreateInstruction {
       id
       name
+      media_type
+      url
       spoken_text
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateInstructions = /* GraphQL */ `
-  subscription OnUpdateInstructions {
-    onUpdateInstructions {
+export const onUpdateInstruction = /* GraphQL */ `
+  subscription OnUpdateInstruction {
+    onUpdateInstruction {
       id
       name
+      media_type
+      url
       spoken_text
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteInstructions = /* GraphQL */ `
-  subscription OnDeleteInstructions {
-    onDeleteInstructions {
+export const onDeleteInstruction = /* GraphQL */ `
+  subscription OnDeleteInstruction {
+    onDeleteInstruction {
       id
       name
+      media_type
+      url
       spoken_text
       createdAt
       updatedAt
     }
   }
 `;
-export const onCreateRules = /* GraphQL */ `
-  subscription OnCreateRules {
-    onCreateRules {
+export const onCreateRule = /* GraphQL */ `
+  subscription OnCreateRule {
+    onCreateRule {
       id
       name
       can_come_before
@@ -81,9 +87,9 @@ export const onCreateRules = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateRules = /* GraphQL */ `
-  subscription OnUpdateRules {
-    onUpdateRules {
+export const onUpdateRule = /* GraphQL */ `
+  subscription OnUpdateRule {
+    onUpdateRule {
       id
       name
       can_come_before
@@ -95,9 +101,9 @@ export const onUpdateRules = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteRules = /* GraphQL */ `
-  subscription OnDeleteRules {
-    onDeleteRules {
+export const onDeleteRule = /* GraphQL */ `
+  subscription OnDeleteRule {
+    onDeleteRule {
       id
       name
       can_come_before

@@ -4,13 +4,15 @@ type Todo @model {
   description: String
 }
 
-type Instructions @model {
+type Instruction @model {
   id: ID!
   name: String!
+  media_type: String!
+  url: String
   spoken_text: String
 }
 
-type Rules @model {
+type Rule @model {
   id: ID!
   name: String!
   can_come_before: [String]

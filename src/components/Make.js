@@ -1,65 +1,183 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { createTodo } from "../graphql/mutations";
-import { listTodos } from "../graphql/queries";
+import { createInstruction } from "../graphql/mutations";
+import { listInstructions } from "../graphql/queries";
+import { createRule } from "../graphql/mutations";
+import { listRules } from "../graphql/queries";
 
-const initialState = { name: "", description: "" };
+const initialInstructionState = {
+  name: "",
+  media_type: "",
+  url: "",
+  spoken_text: "",
+};
+const initialRuleState = {
+  name: "",
+  can_come_before: "",
+  can_come_after: "",
+  cannot_come_before: "",
+  cannot_come_after: "",
+};
 
-const Todo = () => {
-  const [formState, setFormState] = useState(initialState);
-  const [todos, setTodos] = useState([]);
+const Make = () => {
+  const [instructionState, setInstructionState] = useState(
+    initialInstructionState
+  );
+  const [instructions, setInstructions] = useState([]);
+  const [ruleState, setRuleState] = useState(initialRuleState);
+  const [rules, setRules] = useState([]);
 
   useEffect(() => {
-    fetchTodos();
+    fetchInstructions();
+    fetchRules();
   }, []);
 
-  function setInput(key, value) {
-    setFormState({ ...formState, [key]: value });
+  function setInstructionInput(key, value) {
+    setInstructionState({ ...instructionState, [key]: value });
   }
-  async function fetchTodos() {
+  function setRuleInput(key, value) {
+    setRuleState({ ...ruleState, [key]: value });
+  }
+
+  async function fetchInstructions() {
     try {
-      const todoData = await API.graphql(graphqlOperation(listTodos));
-      const todos = todoData.data.listTodos.items;
-      setTodos(todos);
+      const instructionData = await API.graphql(
+        graphqlOperation(listInstructions)
+      );
+      const instructions = instructionData.data.listInstructions.items;
+      setInstructions(instructions);
     } catch (err) {
-      console.log("error fetching todos");
+      console.log("error fetching instructions");
     }
   }
 
-  async function addTodo() {
+  async function fetchRules() {
     try {
-      if (!formState.name || !formState.description) return;
-      const todo = { ...formState };
-      setTodos([...todos, todo]);
-      setFormState(initialState);
-      await API.graphql(graphqlOperation(createTodo, { input: todo }));
+      const ruleData = await API.graphql(graphqlOperation(listRules));
+      const rules = ruleData.data.listRules.items;
+      setRules(rules);
     } catch (err) {
-      console.log("error creating todo:", err);
+      console.log("error fetching rules");
+    }
+  }
+
+  async function addInstruction() {
+    try {
+      if (!instructionState.name || !instructionState.media_type) return;
+      const instruction = { ...instructionState };
+      setInstructions([...instructions, instruction]);
+      setInstructionState(initialInstructionState);
+      await API.graphql(
+        graphqlOperation(createInstruction, { input: instruction })
+      );
+    } catch (err) {
+      console.log("error creating instruction:", err);
+    }
+  }
+  async function addRule() {
+    try {
+      if (!ruleState.name) return;
+      const rule = { ...ruleState };
+      setRules([...rules, rule]);
+      setRuleState(initialRuleState);
+      await API.graphql(graphqlOperation(createRule, { input: rule }));
+    } catch (err) {
+      console.log("error creating rule:", err);
     }
   }
 
   return (
     <div style={styles.container}>
-      <h2>Amplify Todos</h2>
+      <h2>Create Instruction</h2>
       <input
-        onChange={(event) => setInput("name", event.target.value)}
+        onChange={(event) => setInstructionInput("name", event.target.value)}
         style={styles.input}
-        value={formState.name}
+        value={instructionState.name}
         placeholder="Name"
       />
       <input
-        onChange={(event) => setInput("description", event.target.value)}
+        onChange={(event) =>
+          setInstructionInput("media_type", event.target.value)
+        }
         style={styles.input}
-        value={formState.description}
-        placeholder="Description"
+        value={instructionState.media_type}
+        placeholder="Media Type"
       />
-      <button style={styles.button} onClick={addTodo}>
-        Create Todo
+      <input
+        onChange={(event) => setInstructionInput("url", event.target.value)}
+        style={styles.input}
+        value={instructionState.url}
+        placeholder="URL"
+      />
+      <input
+        onChange={(event) =>
+          setInstructionInput("spoken_text", event.target.value)
+        }
+        style={styles.input}
+        value={instructionState.spoken_text}
+        placeholder="Spoken Text"
+      />
+      <button style={styles.button} onClick={addInstruction}>
+        Create Instruction
       </button>
-      {todos.map((todo, index) => (
-        <div key={todo.id ? todo.id : index} style={styles.todo}>
-          <p style={styles.todoName}>{todo.name}</p>
-          <p style={styles.todoDescription}>{todo.description}</p>
+      <h2>Create Rule</h2>
+      <input
+        onChange={(event) => setRuleInput("name", event.target.value)}
+        style={styles.input}
+        value={ruleState.name}
+        placeholder="Name"
+      />
+      <input
+        onChange={(event) =>
+          setRuleInput("can_come_before", event.target.value)
+        }
+        style={styles.input}
+        value={ruleState.can_come_before}
+        placeholder="Can Come Before"
+      />
+      <input
+        onChange={(event) => setRuleInput("can_come_after", event.target.value)}
+        style={styles.input}
+        value={ruleState.can_come_after}
+        placeholder="Can Come AFter"
+      />
+      <input
+        onChange={(event) =>
+          setRuleInput("cannot_come_before", event.target.value)
+        }
+        style={styles.input}
+        value={ruleState.cannot_come_before}
+        placeholder="Cannot Come Before"
+      />
+      <input
+        onChange={(event) =>
+          setRuleInput("cannot_come_after", event.target.value)
+        }
+        style={styles.input}
+        value={ruleState.cannot_come_after}
+        placeholder="Cannot Come AFter"
+      />
+      <button style={styles.button} onClick={addRule}>
+        Create Rule
+      </button>
+      {instructions.map((instruction, index) => (
+        <div
+          key={instruction.id ? instruction.id : index}
+          style={styles.instruction}
+        >
+          <p style={styles.instructionName}>{instruction.name}</p>
+          <p style={styles.instructionMediaType}>{instruction.media_type}</p>
+          <p style={styles.instructionMediaType}>{instruction.url}</p>
+          <p style={styles.instructionMediaType}>{instruction.spoken_text}</p>
+        </div>
+      ))}
+      {rules.map((rule, index) => (
+        <div key={rule.id ? rule.id : index} style={styles.rule}>
+          <p style={styles.instructionName}>{rule.name}</p>
+          <p style={styles.instructionMediaType}>{rule.can_come_before}</p>
+          <p style={styles.instructionMediaType}>{rule.can_come_after}</p>
+          <p style={styles.instructionMediaType}>{rule.cannot_come_before}</p>
+          <p style={styles.instructionMediaType}>{rule.cannot_come_after}</p>
         </div>
       ))}
     </div>
@@ -76,7 +194,7 @@ const styles = {
     justifyContent: "center",
     padding: 20,
   },
-  todo: { marginBottom: 15 },
+  instruction: { marginBottom: 5 },
   input: {
     border: "none",
     backgroundColor: "#ddd",
@@ -84,8 +202,8 @@ const styles = {
     padding: 8,
     fontSize: 18,
   },
-  todoName: { fontSize: 20, fontWeight: "bold" },
-  todoDescription: { marginBottom: 0 },
+  instructionName: { fontSize: 20, fontWeight: "bold" },
+  instructionMediaType: { marginBottom: 0 },
   button: {
     backgroundColor: "black",
     color: "white",
@@ -95,4 +213,4 @@ const styles = {
   },
 };
 
-export default Todo;
+export default Make;

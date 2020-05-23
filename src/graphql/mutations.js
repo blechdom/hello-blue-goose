@@ -43,54 +43,60 @@ export const deleteTodo = /* GraphQL */ `
     }
   }
 `;
-export const createInstructions = /* GraphQL */ `
-  mutation CreateInstructions(
-    $input: CreateInstructionsInput!
-    $condition: ModelInstructionsConditionInput
+export const createInstruction = /* GraphQL */ `
+  mutation CreateInstruction(
+    $input: CreateInstructionInput!
+    $condition: ModelInstructionConditionInput
   ) {
-    createInstructions(input: $input, condition: $condition) {
+    createInstruction(input: $input, condition: $condition) {
       id
       name
+      media_type
+      url
       spoken_text
       createdAt
       updatedAt
     }
   }
 `;
-export const updateInstructions = /* GraphQL */ `
-  mutation UpdateInstructions(
-    $input: UpdateInstructionsInput!
-    $condition: ModelInstructionsConditionInput
+export const updateInstruction = /* GraphQL */ `
+  mutation UpdateInstruction(
+    $input: UpdateInstructionInput!
+    $condition: ModelInstructionConditionInput
   ) {
-    updateInstructions(input: $input, condition: $condition) {
+    updateInstruction(input: $input, condition: $condition) {
       id
       name
+      media_type
+      url
       spoken_text
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteInstructions = /* GraphQL */ `
-  mutation DeleteInstructions(
-    $input: DeleteInstructionsInput!
-    $condition: ModelInstructionsConditionInput
+export const deleteInstruction = /* GraphQL */ `
+  mutation DeleteInstruction(
+    $input: DeleteInstructionInput!
+    $condition: ModelInstructionConditionInput
   ) {
-    deleteInstructions(input: $input, condition: $condition) {
+    deleteInstruction(input: $input, condition: $condition) {
       id
       name
+      media_type
+      url
       spoken_text
       createdAt
       updatedAt
     }
   }
 `;
-export const createRules = /* GraphQL */ `
-  mutation CreateRules(
-    $input: CreateRulesInput!
-    $condition: ModelRulesConditionInput
+export const createRule = /* GraphQL */ `
+  mutation CreateRule(
+    $input: CreateRuleInput!
+    $condition: ModelRuleConditionInput
   ) {
-    createRules(input: $input, condition: $condition) {
+    createRule(input: $input, condition: $condition) {
       id
       name
       can_come_before
@@ -102,12 +108,12 @@ export const createRules = /* GraphQL */ `
     }
   }
 `;
-export const updateRules = /* GraphQL */ `
-  mutation UpdateRules(
-    $input: UpdateRulesInput!
-    $condition: ModelRulesConditionInput
+export const updateRule = /* GraphQL */ `
+  mutation UpdateRule(
+    $input: UpdateRuleInput!
+    $condition: ModelRuleConditionInput
   ) {
-    updateRules(input: $input, condition: $condition) {
+    updateRule(input: $input, condition: $condition) {
       id
       name
       can_come_before
@@ -119,12 +125,12 @@ export const updateRules = /* GraphQL */ `
     }
   }
 `;
-export const deleteRules = /* GraphQL */ `
-  mutation DeleteRules(
-    $input: DeleteRulesInput!
-    $condition: ModelRulesConditionInput
+export const deleteRule = /* GraphQL */ `
+  mutation DeleteRule(
+    $input: DeleteRuleInput!
+    $condition: ModelRuleConditionInput
   ) {
-    deleteRules(input: $input, condition: $condition) {
+    deleteRule(input: $input, condition: $condition) {
       id
       name
       can_come_before

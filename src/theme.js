@@ -16,6 +16,10 @@ const theme = createMuiTheme({
       default: "#fff",
     },
   },
+  typography: {
+    useNextVariants: true,
+    fontFamily: "Neucha, Ubuntu, Roboto, sans-serif",
+  },
 });
 
 export default theme;

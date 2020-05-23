@@ -30,27 +30,31 @@ export const listTodos = /* GraphQL */ `
     }
   }
 `;
-export const getInstructions = /* GraphQL */ `
-  query GetInstructions($id: ID!) {
-    getInstructions(id: $id) {
+export const getInstruction = /* GraphQL */ `
+  query GetInstruction($id: ID!) {
+    getInstruction(id: $id) {
       id
       name
+      media_type
+      url
       spoken_text
       createdAt
       updatedAt
     }
   }
 `;
-export const listInstructionss = /* GraphQL */ `
-  query ListInstructionss(
-    $filter: ModelInstructionsFilterInput
+export const listInstructions = /* GraphQL */ `
+  query ListInstructions(
+    $filter: ModelInstructionFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listInstructionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listInstructions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
+        media_type
+        url
         spoken_text
         createdAt
         updatedAt
@@ -59,9 +63,9 @@ export const listInstructionss = /* GraphQL */ `
     }
   }
 `;
-export const getRules = /* GraphQL */ `
-  query GetRules($id: ID!) {
-    getRules(id: $id) {
+export const getRule = /* GraphQL */ `
+  query GetRule($id: ID!) {
+    getRule(id: $id) {
       id
       name
       can_come_before
@@ -73,13 +77,13 @@ export const getRules = /* GraphQL */ `
     }
   }
 `;
-export const listRuless = /* GraphQL */ `
-  query ListRuless(
-    $filter: ModelRulesFilterInput
+export const listRules = /* GraphQL */ `
+  query ListRules(
+    $filter: ModelRuleFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listRuless(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listRules(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
