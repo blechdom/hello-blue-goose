@@ -31,9 +31,6 @@ const NavBar = () => {
             <Button component={Link} to="/make" color="inherit">
               Make
             </Button>
-            <Button component={Link} to="/todo" color="inherit">
-              Todo
-            </Button>
           </div>
         </Toolbar>
       </AppBar>

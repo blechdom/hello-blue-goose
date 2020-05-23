@@ -4,7 +4,6 @@ import { Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import Play from "./components/Play";
 import Make from "./components/Make";
-import Todo from "./components/Todo";
 import history from "./utils/history";
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/play" component={Play} />
           <Route path="/make" component={Make} />
-          <Route path="/todo" component={Todo} />
         </Switch>
       </Router>
     </div>

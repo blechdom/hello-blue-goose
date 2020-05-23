@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 const HOOK_SVG =
@@ -7,14 +8,11 @@ const HOOK_SVG =
 const HOOK_PATH = new Path2D(HOOK_SVG);
 function draw(ctx, location, shape, color, svgPath) {
   ctx.beginPath();
-  var x = location.x; // x coordinate
-  var y = location.y; // y coordinate
   var radius = 200; // Arc radius
-  var startAngle = 0; // Starting point on circle
-  var endAngle = Math.PI + (Math.PI * 2) / 2; // End point on circle
-  //  var anticlockwise = i % 2 !== 0; // clockwise or anticlockwise
 
-  ctx.arc(x, y, radius, startAngle, endAngle, true);
+  var endAngle = Math.PI * 2; // End point on circle
+
+  ctx.arc(location.x, location.y + radius / 2, radius, 0, endAngle, true);
   ctx.fillStyle = color;
   ctx.fill();
 
@@ -28,34 +26,50 @@ function draw(ctx, location, shape, color, svgPath) {
 }
 
 const Play = () => {
+  const [showCanvas, setShowCanvas] = useState(false);
   const canvasRef = React.useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, window.innerHeight, window.innerWidth);
+    if (showCanvas) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, window.innerHeight, window.innerWidth);
 
-    draw(
-      ctx,
-      { x: window.innerWidth / 2, y: window.innerHeight / 6 },
-      "triangle",
-      "Red",
-      HOOK_PATH
-    );
+      draw(
+        ctx,
+        { x: window.innerWidth / 2, y: window.innerHeight / 6 },
+        "triangle",
+        "Red",
+        HOOK_PATH
+      );
+    }
   });
 
-  return (
-    <div>
-      <Box display="flex" justifyContent="center" m={4} p={4}>
-        <Typography variant="h1">Play</Typography>
-      </Box>
-      <canvas
-        ref={canvasRef}
-        width={window.innerWidth}
-        height={window.innerHeight}
-      />
-    </div>
-  );
+  function setCanvasTrue() {
+    setShowCanvas(true);
+    //start game
+  }
+  if (!showCanvas) {
+    return (
+      <div>
+        <Box display="flex" justifyContent="center" m={8} p={8}>
+          <Button onClick={setCanvasTrue}>
+            <Typography variant="h1">Play</Typography>
+          </Button>
+        </Box>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <canvas
+          ref={canvasRef}
+          width={window.innerWidth}
+          height={window.innerHeight}
+        />
+      </div>
+    );
+  }
 };
 
 export default Play;
