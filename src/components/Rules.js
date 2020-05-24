@@ -4,25 +4,21 @@ import { createRule } from "../graphql/mutations";
 import { listRules } from "../graphql/queries";
 import MaterialTable from "material-table";
 
-const initialRuleState = {
-  name: "",
-  can_come_before: [],
-  can_come_after: [],
-  cannot_come_before: [],
-  cannot_come_after: [],
-};
-
 const Rules = () => {
-  const [ruleState, setRuleState] = useState(initialRuleState);
+  const [state, setState] = useState({
+    columns: [
+      { title: "Name", field: "name" },
+      { title: "Can Come Before", field: "can_come_before" },
+      { title: "Can Come After", field: "can_come_after" },
+      { title: "Cannot Come Before", field: "cannot_come_before" },
+      { title: "Cannot Come After", field: "cannot_come_after" },
+    ],
+  });
   const [rules, setRules] = useState([]);
 
   useEffect(() => {
     fetchRules();
   }, []);
-
-  function setRuleInput(key, value) {
-    setRuleState({ ...ruleState, [key]: value });
-  }
 
   async function fetchRules() {
     try {
@@ -59,25 +55,13 @@ const Rules = () => {
     // delete rule.tableData;
     try {
       // if (!rule.name) return;
-      await API.graphql(
-        graphqlOperation(deleteRule, { input: { id: rule.id } })
-      );
+      await API.graphql(graphqlOperation(deleteRule, { input: rule }));
       // fetchRules();
       // setRules([...rules, rule]);
     } catch (err) {
       console.log("error deleting rule:", err);
     }
   }
-
-  const [state, setState] = useState({
-    columns: [
-      { title: "Name", field: "name" },
-      { title: "Can Come Before", field: "can_come_before" },
-      { title: "Can Come After", field: "can_come_after" },
-      { title: "Cannot Come Before", field: "cannot_come_before" },
-      { title: "Cannot Come After", field: "cannot_come_after" },
-    ],
-  });
 
   return (
     <MaterialTable

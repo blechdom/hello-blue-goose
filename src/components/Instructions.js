@@ -2,17 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { createInstruction } from "../graphql/mutations";
 import { listInstructions } from "../graphql/queries";
-import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, TextField } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
-}));
+import MaterialTable from "material-table";
 
 const initialInstructionState = {
   name: "",
@@ -22,20 +12,19 @@ const initialInstructionState = {
 };
 
 const Instructions = () => {
-  const classes = useStyles();
-
-  const [instructionState, setInstructionState] = useState(
-    initialInstructionState
-  );
+  const [state, setState] = useState({
+    columns: [
+      { title: "Name", field: "name" },
+      { title: "Media Type", field: "media_type" },
+      { title: "URL", field: "url" },
+      { title: "Spoken Text", field: "spoken_text" },
+    ],
+  });
   const [instructions, setInstructions] = useState([]);
 
   useEffect(() => {
     fetchInstructions();
   }, []);
-
-  function setInstructionInput(key, value) {
-    setInstructionState({ ...instructionState, [key]: value });
-  }
 
   async function fetchInstructions() {
     try {
@@ -49,100 +38,60 @@ const Instructions = () => {
     }
   }
 
-  async function addInstruction() {
+  async function addInstruction(instruction) {
     try {
-      if (!instructionState.name || !instructionState.media_type) return;
-      const instruction = { ...instructionState };
-      setInstructions([...instructions, instruction]);
-      setInstructionState(initialInstructionState);
+      if (!instruction.name || !instruction.media_type) return;
       await API.graphql(
         graphqlOperation(createInstruction, { input: instruction })
       );
+      fetchInstructions();
     } catch (err) {
       console.log("error creating instruction:", err);
     }
   }
 
-  return (
-    <div style={styles.container}>
-      <Box display="flex" justifyContent="center" m={2} p={2}>
-        <form className={classes.root} noValidate autoComplete="off">
-          <h2>Create Instruction</h2>
-          <TextField
-            onChange={(event) =>
-              setInstructionInput("name", event.target.value)
-            }
-            value={instructionState.name}
-            label="Name"
-          />
-          <TextField
-            onChange={(event) =>
-              setInstructionInput("media_type", event.target.value)
-            }
-            value={instructionState.media_type}
-            label="Media Type"
-          />
-          <TextField
-            onChange={(event) => setInstructionInput("url", event.target.value)}
-            value={instructionState.url}
-            label="URL"
-          />
-          <TextField
-            onChange={(event) =>
-              setInstructionInput("spoken_text", event.target.value)
-            }
-            value={instructionState.spoken_text}
-            label="Spoken Text"
-          />
-          <Button onClick={addInstruction} variant="contained" color="primary">
-            Create Instruction
-          </Button>
-        </form>
-      </Box>
-      <Box display="flex" justifyContent="center" m={2} p={2}>
-        {instructions.map((instruction, index) => (
-          <div
-            key={instruction.id ? instruction.id : index}
-            style={styles.instruction}
-          >
-            <p style={styles.instructionName}>{instruction.name}</p>
-            <p style={styles.instructionMediaType}>{instruction.media_type}</p>
-            <p style={styles.instructionMediaType}>{instruction.url}</p>
-            <p style={styles.instructionMediaType}>{instruction.spoken_text}</p>
-          </div>
-        ))}
-      </Box>
-    </div>
-  );
-};
+  async function deleteInstruction(instruction) {
+    console.log("delete ", instruction);
+    try {
+      await API.graphql(
+        graphqlOperation(deleteInstruction, { input: { id: instruction.id } })
+      );
+      fetchInstructions();
+    } catch (err) {
+      console.log("error deleting instruction:", err);
+    }
+  }
 
-const styles = {
-  container: {
-    width: 400,
-    margin: "0 auto",
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 20,
-  },
-  instruction: { marginBottom: 5 },
-  input: {
-    border: "none",
-    backgroundColor: "#ddd",
-    marginBottom: 10,
-    padding: 8,
-    fontSize: 18,
-  },
-  instructionName: { fontSize: 20, fontWeight: "bold" },
-  instructionMediaType: { marginBottom: 0 },
-  button: {
-    backgroundColor: "black",
-    color: "white",
-    outline: "none",
-    fontSize: 18,
-    padding: "12px 0px",
-  },
+  return (
+    <MaterialTable
+      title="Instruction Data"
+      columns={state.columns}
+      data={instructions}
+      editable={{
+        onRowAdd: (newData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              addInstruction(newData);
+            }, 600);
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              // updateRule(newData);
+            }, 600);
+          }),
+        onRowDelete: (oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              deleteInstruction(oldData);
+            }, 600);
+          }),
+      }}
+    />
+  );
 };
 
 export default Instructions;
