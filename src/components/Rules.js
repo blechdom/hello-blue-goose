@@ -2,41 +2,17 @@ import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { createRule } from "../graphql/mutations";
 import { listRules } from "../graphql/queries";
-import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, TextField } from "@material-ui/core";
-import RulesTable from "./RulesTable";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
-  container: {
-    width: 400,
-    margin: "0 auto",
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 20,
-  },
-  table: {
-    minWidth: 650,
-  },
-}));
+import MaterialTable from "material-table";
 
 const initialRuleState = {
   name: "",
-  can_come_before: "",
-  can_come_after: "",
-  cannot_come_before: "",
-  cannot_come_after: "",
+  can_come_before: [],
+  can_come_after: [],
+  cannot_come_before: [],
+  cannot_come_after: [],
 };
 
 const Rules = () => {
-  const classes = useStyles();
   const [ruleState, setRuleState] = useState(initialRuleState);
   const [rules, setRules] = useState([]);
 
@@ -58,63 +34,80 @@ const Rules = () => {
     }
   }
 
-  async function addRule() {
+  async function addRule(rule) {
     try {
-      if (!ruleState.name) return;
-      const rule = { ...ruleState };
-      setRules([...rules, rule]);
-      setRuleState(initialRuleState);
+      if (!rule.name) return;
       await API.graphql(graphqlOperation(createRule, { input: rule }));
+      fetchRules();
     } catch (err) {
       console.log("error creating rule:", err);
     }
   }
+  async function updateRule(rule) {
+    console.log("update ", rule);
+
+    try {
+      if (!rule.name) return;
+      await API.graphql(graphqlOperation(updateRule, { input: rule }));
+      // setRules([...rules, rule]);
+    } catch (err) {
+      console.log("error updating rule:", err);
+    }
+  }
+  async function deleteRule(rule) {
+    console.log("delete ", rule);
+    // delete rule.tableData;
+    try {
+      // if (!rule.name) return;
+      await API.graphql(
+        graphqlOperation(deleteRule, { input: { id: rule.id } })
+      );
+      // fetchRules();
+      // setRules([...rules, rule]);
+    } catch (err) {
+      console.log("error deleting rule:", err);
+    }
+  }
+
+  const [state, setState] = useState({
+    columns: [
+      { title: "Name", field: "name" },
+      { title: "Can Come Before", field: "can_come_before" },
+      { title: "Can Come After", field: "can_come_after" },
+      { title: "Cannot Come Before", field: "cannot_come_before" },
+      { title: "Cannot Come After", field: "cannot_come_after" },
+    ],
+  });
 
   return (
-    <div className={classes.container}>
-      <Box display="flex" justifyContent="center" m={2} p={2}>
-        <form className={classes.root} noValidate autoComplete="off">
-          <h2>Create Rule</h2>
-          <TextField
-            onChange={(event) => setRuleInput("name", event.target.value)}
-            value={ruleState.name}
-            label="Name"
-          />
-          <TextField
-            onChange={(event) =>
-              setRuleInput("can_come_before", event.target.value)
-            }
-            value={ruleState.can_come_before}
-            label="Can Come Before"
-          />
-          <TextField
-            onChange={(event) =>
-              setRuleInput("can_come_after", event.target.value)
-            }
-            value={ruleState.can_come_after}
-            label="Can Come AFter"
-          />
-          <TextField
-            onChange={(event) =>
-              setRuleInput("cannot_come_before", event.target.value)
-            }
-            value={ruleState.cannot_come_before}
-            label="Cannot Come Before"
-          />
-          <TextField
-            onChange={(event) =>
-              setRuleInput("cannot_come_after", event.target.value)
-            }
-            value={ruleState.cannot_come_after}
-            label="Cannot Come AFter"
-          />
-          <Button onClick={addRule} variant="contained" color="primary">
-            Create Rule
-          </Button>
-        </form>
-      </Box>
-      <RulesTable rules={rules} />
-    </div>
+    <MaterialTable
+      title="Rules Data"
+      columns={state.columns}
+      data={rules}
+      editable={{
+        onRowAdd: (newData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              addRule(newData);
+            }, 600);
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              updateRule(newData);
+            }, 600);
+          }),
+        onRowDelete: (oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              deleteRule(oldData);
+            }, 600);
+          }),
+      }}
+    />
   );
 };
 
