@@ -1,6 +1,60 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createGame = /* GraphQL */ `
+  mutation CreateGame(
+    $input: CreateGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    createGame(input: $input, condition: $condition) {
+      id
+      name
+      play_type
+      colors
+      shapes
+      categories
+      things
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateGame = /* GraphQL */ `
+  mutation UpdateGame(
+    $input: UpdateGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    updateGame(input: $input, condition: $condition) {
+      id
+      name
+      play_type
+      colors
+      shapes
+      categories
+      things
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteGame = /* GraphQL */ `
+  mutation DeleteGame(
+    $input: DeleteGameInput!
+    $condition: ModelGameConditionInput
+  ) {
+    deleteGame(input: $input, condition: $condition) {
+      id
+      name
+      play_type
+      colors
+      shapes
+      categories
+      things
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createInstruction = /* GraphQL */ `
   mutation CreateInstruction(
     $input: CreateInstructionInput!
@@ -95,6 +149,63 @@ export const deleteRule = /* GraphQL */ `
       can_come_after
       cannot_come_before
       cannot_come_after
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUnit = /* GraphQL */ `
+  mutation CreateUnit(
+    $input: CreateUnitInput!
+    $condition: ModelUnitConditionInput
+  ) {
+    createUnit(input: $input, condition: $condition) {
+      id
+      name
+      unit_type
+      svg
+      image
+      hex_color
+      description
+      tags
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUnit = /* GraphQL */ `
+  mutation UpdateUnit(
+    $input: UpdateUnitInput!
+    $condition: ModelUnitConditionInput
+  ) {
+    updateUnit(input: $input, condition: $condition) {
+      id
+      name
+      unit_type
+      svg
+      image
+      hex_color
+      description
+      tags
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUnit = /* GraphQL */ `
+  mutation DeleteUnit(
+    $input: DeleteUnitInput!
+    $condition: ModelUnitConditionInput
+  ) {
+    deleteUnit(input: $input, condition: $condition) {
+      id
+      name
+      unit_type
+      svg
+      image
+      hex_color
+      description
+      tags
       createdAt
       updatedAt
     }

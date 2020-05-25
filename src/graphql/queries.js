@@ -1,6 +1,43 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getGame = /* GraphQL */ `
+  query GetGame($id: ID!) {
+    getGame(id: $id) {
+      id
+      name
+      play_type
+      colors
+      shapes
+      categories
+      things
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGames = /* GraphQL */ `
+  query ListGames(
+    $filter: ModelGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        play_type
+        colors
+        shapes
+        categories
+        things
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getInstruction = /* GraphQL */ `
   query GetInstruction($id: ID!) {
     getInstruction(id: $id) {
@@ -62,6 +99,45 @@ export const listRules = /* GraphQL */ `
         can_come_after
         cannot_come_before
         cannot_come_after
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUnit = /* GraphQL */ `
+  query GetUnit($id: ID!) {
+    getUnit(id: $id) {
+      id
+      name
+      unit_type
+      svg
+      image
+      hex_color
+      description
+      tags
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUnits = /* GraphQL */ `
+  query ListUnits(
+    $filter: ModelUnitFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUnits(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        unit_type
+        svg
+        image
+        hex_color
+        description
+        tags
         createdAt
         updatedAt
       }

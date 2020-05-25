@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { createRule } from "../graphql/mutations";
+import { createRule, deleteRule, updateRule } from "../graphql/mutations";
 import { listRules } from "../graphql/queries";
 import MaterialTable from "material-table";
 
 const Rules = () => {
-  const [state, setState] = useState({
-    columns: [
-      { title: "Name", field: "name" },
-      { title: "Can Come Before", field: "can_come_before" },
-      { title: "Can Come After", field: "can_come_after" },
-      { title: "Cannot Come Before", field: "cannot_come_before" },
-      { title: "Cannot Come After", field: "cannot_come_after" },
-    ],
-  });
+  const [columns] = useState([
+    { title: "Name", field: "name" },
+    { title: "Can Come Before", field: "can_come_before" },
+    { title: "Can Come After", field: "can_come_after" },
+    { title: "Cannot Come Before", field: "cannot_come_before" },
+    { title: "Cannot Come After", field: "cannot_come_after" },
+  ]);
   const [rules, setRules] = useState([]);
 
   useEffect(() => {
@@ -39,25 +37,21 @@ const Rules = () => {
       console.log("error creating rule:", err);
     }
   }
-  async function updateRule(rule) {
-    console.log("update ", rule);
-
+  async function updateTheRule(rule) {
     try {
       if (!rule.name) return;
+      delete rule.createdAt;
+      delete rule.updatedAt;
       await API.graphql(graphqlOperation(updateRule, { input: rule }));
-      // setRules([...rules, rule]);
+      fetchRules();
     } catch (err) {
       console.log("error updating rule:", err);
     }
   }
-  async function deleteRule(rule) {
-    console.log("delete ", rule);
-    // delete rule.tableData;
+  async function removeRule(id) {
     try {
-      // if (!rule.name) return;
-      await API.graphql(graphqlOperation(deleteRule, { input: rule }));
-      // fetchRules();
-      // setRules([...rules, rule]);
+      await API.graphql(graphqlOperation(deleteRule, { input: { id } }));
+      fetchRules();
     } catch (err) {
       console.log("error deleting rule:", err);
     }
@@ -66,7 +60,7 @@ const Rules = () => {
   return (
     <MaterialTable
       title="Rules Data"
-      columns={state.columns}
+      columns={columns}
       data={rules}
       editable={{
         onRowAdd: (newData) =>
@@ -80,14 +74,14 @@ const Rules = () => {
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              updateRule(newData);
+              updateTheRule(newData);
             }, 600);
           }),
         onRowDelete: (oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              deleteRule(oldData);
+              removeRule(oldData.id);
             }, 600);
           }),
       }}

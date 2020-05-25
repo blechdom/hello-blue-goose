@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Games from "./Games";
 import Instructions from "./Instructions";
 import Rules from "./Rules";
+import Units from "./Units";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
@@ -21,6 +22,9 @@ const Make = () => {
         break;
       case 2:
         setTabContent(<Rules />);
+        break;
+      case 3:
+        setTabContent(<Units />);
         break;
       default:
         setTabContent(<Games />);
@@ -47,6 +51,7 @@ const Make = () => {
         <Tab label="Games" />
         <Tab label="Instructions" />
         <Tab label="Rules" />
+        <Tab label="Units" />
       </Tabs>
       <Box display="flex" justifyContent="center" m={2} p={2}>
         {tabContent}

@@ -1,3 +1,13 @@
+type Game @model {
+  id: ID!
+  name: String!
+  play_type: String!
+  colors: [String]
+  shapes: [String]
+  categories: [String]
+  things: [String]
+}
+
 type Instruction @model {
   id: ID!
   name: String!
@@ -13,4 +23,15 @@ type Rule @model {
   can_come_after: [String]
   cannot_come_before: [String]
   cannot_come_after: [String]
+}
+
+type Unit @model {
+  id: ID!
+  name: String!
+  unit_type: String!
+  svg: String
+  image: String
+  hex_color: String
+  description: String
+  tags: [String]
 }

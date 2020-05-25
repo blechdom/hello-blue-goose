@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { createInstruction } from "../graphql/mutations";
+import {
+  createInstruction,
+  updateInstruction,
+  deleteInstruction,
+} from "../graphql/mutations";
 import { listInstructions } from "../graphql/queries";
 import MaterialTable from "material-table";
 
-const initialInstructionState = {
-  name: "",
-  media_type: "",
-  url: "",
-  spoken_text: "",
-};
-
 const Instructions = () => {
-  const [state, setState] = useState({
-    columns: [
-      { title: "Name", field: "name" },
-      { title: "Media Type", field: "media_type" },
-      { title: "URL", field: "url" },
-      { title: "Spoken Text", field: "spoken_text" },
-    ],
-  });
+  const [columns] = useState([
+    { title: "Name", field: "name" },
+    { title: "Media Type", field: "media_type" },
+    { title: "URL", field: "url" },
+    { title: "Spoken Text", field: "spoken_text" },
+  ]);
   const [instructions, setInstructions] = useState([]);
 
   useEffect(() => {
@@ -50,11 +45,22 @@ const Instructions = () => {
     }
   }
 
-  async function deleteInstruction(instruction) {
-    console.log("delete ", instruction);
+  async function removeInstruction(id) {
     try {
+      await API.graphql(graphqlOperation(deleteInstruction, { input: { id } }));
+      fetchInstructions();
+    } catch (err) {
+      console.log("error deleting instruction:", err);
+    }
+  }
+
+  async function updateTheInstruction(instruction) {
+    try {
+      if (!instruction.name || !instruction.media_type) return;
+      delete instruction.createdAt;
+      delete instruction.updatedAt;
       await API.graphql(
-        graphqlOperation(deleteInstruction, { input: { id: instruction.id } })
+        graphqlOperation(updateInstruction, { input: instruction })
       );
       fetchInstructions();
     } catch (err) {
@@ -65,7 +71,7 @@ const Instructions = () => {
   return (
     <MaterialTable
       title="Instruction Data"
-      columns={state.columns}
+      columns={columns}
       data={instructions}
       editable={{
         onRowAdd: (newData) =>
@@ -79,14 +85,14 @@ const Instructions = () => {
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              // updateRule(newData);
+              updateTheInstruction(newData);
             }, 600);
           }),
         onRowDelete: (oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              deleteInstruction(oldData);
+              removeInstruction(oldData.id);
             }, 600);
           }),
       }}
