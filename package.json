@@ -19,6 +19,7 @@
     "aws-amplify": "^3.0.11",
     "aws-sdk": "^2.679.0",
     "axios": "^0.19.2",
+    "jest-canvas-mock": "^2.2.0",
     "material-table": "^1.57.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
