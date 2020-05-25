@@ -163,6 +163,7 @@ export const createUnit = /* GraphQL */ `
       id
       name
       unit_type
+      category
       svg
       hex_color
       createdAt
@@ -179,6 +180,7 @@ export const updateUnit = /* GraphQL */ `
       id
       name
       unit_type
+      category
       svg
       hex_color
       createdAt
@@ -195,6 +197,7 @@ export const deleteUnit = /* GraphQL */ `
       id
       name
       unit_type
+      category
       svg
       hex_color
       createdAt

@@ -112,6 +112,7 @@ export const getUnit = /* GraphQL */ `
       id
       name
       unit_type
+      category
       svg
       hex_color
       createdAt
@@ -130,6 +131,7 @@ export const listUnits = /* GraphQL */ `
         id
         name
         unit_type
+        category
         svg
         hex_color
         createdAt

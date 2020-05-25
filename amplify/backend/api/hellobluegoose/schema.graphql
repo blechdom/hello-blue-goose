@@ -29,6 +29,7 @@ type Unit @model {
   id: ID!
   name: String!
   unit_type: String!
+  category: String
   svg: String
   hex_color: String
 }

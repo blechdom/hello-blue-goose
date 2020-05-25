@@ -14,6 +14,7 @@ const Units = () => {
         "unit_type" /* ,
       editComponent: (rowData) => unitTypeDropDown(rowData),*/,
     },
+    { title: "Category", field: "category" },
     { title: "Name", field: "name" },
     { title: "SVG", field: "svg" },
     { title: "Hex Color", field: "hex_color" },
