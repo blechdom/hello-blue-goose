@@ -164,10 +164,7 @@ export const createUnit = /* GraphQL */ `
       name
       unit_type
       svg
-      image
       hex_color
-      description
-      tags
       createdAt
       updatedAt
     }
@@ -183,10 +180,7 @@ export const updateUnit = /* GraphQL */ `
       name
       unit_type
       svg
-      image
       hex_color
-      description
-      tags
       createdAt
       updatedAt
     }
@@ -202,10 +196,7 @@ export const deleteUnit = /* GraphQL */ `
       name
       unit_type
       svg
-      image
       hex_color
-      description
-      tags
       createdAt
       updatedAt
     }

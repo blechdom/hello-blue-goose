@@ -30,8 +30,5 @@ type Unit @model {
   name: String!
   unit_type: String!
   svg: String
-  image: String
   hex_color: String
-  description: String
-  tags: [String]
 }

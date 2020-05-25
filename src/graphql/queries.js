@@ -113,10 +113,7 @@ export const getUnit = /* GraphQL */ `
       name
       unit_type
       svg
-      image
       hex_color
-      description
-      tags
       createdAt
       updatedAt
     }
@@ -134,10 +131,7 @@ export const listUnits = /* GraphQL */ `
         name
         unit_type
         svg
-        image
         hex_color
-        description
-        tags
         createdAt
         updatedAt
       }

@@ -10,8 +10,9 @@ const Units = () => {
   const [columns] = useState([
     {
       title: "Unit Type",
-      field: "unit_type",
-      editComponent: (rowData) => unitTypeDropDown(rowData),
+      field:
+        "unit_type" /* ,
+      editComponent: (rowData) => unitTypeDropDown(rowData),*/,
     },
     { title: "Name", field: "name" },
     { title: "SVG", field: "svg" },
