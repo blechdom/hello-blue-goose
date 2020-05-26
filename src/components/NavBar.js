@@ -31,6 +31,9 @@ const NavBar = () => {
             <Button component={Link} to="/make" color="inherit">
               Make
             </Button>
+            <Button component={Link} to="/counter" color="inherit">
+              Counter
+            </Button>
           </div>
         </Toolbar>
       </AppBar>
