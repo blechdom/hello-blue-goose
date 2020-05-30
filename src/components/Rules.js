@@ -1,33 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { createRule, deleteRule, updateRule } from "../graphql/mutations";
-import { listRules } from "../graphql/queries";
 import MaterialTable from "material-table";
 
-const Rules = () => {
-  const [columns] = useState([
-    { title: "Name", field: "name" },
-    { title: "Can Come Before", field: "can_come_before" },
-    { title: "Can Come After", field: "can_come_after" },
-    { title: "Cannot Come Before", field: "cannot_come_before" },
-    { title: "Cannot Come After", field: "cannot_come_after" },
-  ]);
-  const [rules, setRules] = useState([]);
-
-  useEffect(() => {
-    fetchRules();
-  }, []);
-
-  async function fetchRules() {
-    try {
-      const ruleData = await API.graphql(graphqlOperation(listRules));
-      const rules = ruleData.data.listRules.items;
-      setRules(rules);
-    } catch (err) {
-      console.log("error fetching rules");
-    }
-  }
-
+const Rules = ({ fetchRules, rules, rulesLoading }) => {
   async function addRule(rule) {
     try {
       if (!rule.name) return;
@@ -58,34 +34,87 @@ const Rules = () => {
   }
 
   return (
-    <MaterialTable
-      title="Rules Data"
-      columns={columns}
-      data={rules}
-      editable={{
-        onRowAdd: (newData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              addRule(newData);
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              updateTheRule(newData);
-            }, 600);
-          }),
-        onRowDelete: (oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              removeRule(oldData.id);
-            }, 600);
-          }),
-      }}
-    />
+    <>
+      {rulesLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <MaterialTable
+          title="Rules Data"
+          columns={[
+            { title: "ID", field: "id", editable: "never" },
+            { title: "Name", field: "name" },
+            {
+              title: "Can Come Before",
+              field: "can_come_before",
+              render: (rowData) => (
+                <>
+                  {rowData.can_come_before.map((item, index) =>
+                    item.length ? <li key={index}>{item}</li> : ""
+                  )}
+                </>
+              ),
+            },
+            {
+              title: "Can Come After",
+              field: "can_come_after",
+              render: (rowData) => (
+                <>
+                  {rowData.can_come_after.map((item, index) =>
+                    item.length ? <li key={index}>{item}</li> : ""
+                  )}
+                </>
+              ),
+            },
+            {
+              title: "Cannot Come Before",
+              field: "cannot_come_before",
+              render: (rowData) => (
+                <>
+                  {rowData.cannot_come_before.map((item, index) =>
+                    item.length ? <li key={index}>{item}</li> : ""
+                  )}
+                </>
+              ),
+            },
+            {
+              title: "Cannot Come After",
+              field: "cannot_come_after",
+              render: (rowData) => (
+                <>
+                  {rowData.cannot_come_after.map((item, index) =>
+                    item.length ? <li key={index}>{item}</li> : ""
+                  )}
+                </>
+              ),
+            },
+          ]}
+          data={rules}
+          editable={{
+            onRowAdd: (newData) =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve();
+                  addRule(newData);
+                }, 600);
+              }),
+            onRowUpdate: (newData, oldData) =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve();
+                  updateTheRule(newData);
+                }, 600);
+              }),
+            onRowDelete: (oldData) =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve();
+                  removeRule(oldData.id);
+                }, 600);
+              }),
+          }}
+        />
+      )}
+    </>
   );
 };
 
