@@ -3,7 +3,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { createRule, deleteRule, updateRule } from "../graphql/mutations";
 import MaterialTable from "material-table";
 
-const Rules = ({ fetchRules, rules, rulesLoading }) => {
+const Rules = ({ fetchRules, rules, rulesLoading, instructionsList }) => {
   async function addRule(rule) {
     try {
       if (!rule.name) return;
@@ -46,10 +46,15 @@ const Rules = ({ fetchRules, rules, rulesLoading }) => {
             {
               title: "Can Come Before",
               field: "can_come_before",
+              lookup: instructionsList,
               render: (rowData) => (
                 <>
                   {rowData.can_come_before.map((item, index) =>
-                    item.length ? <li key={index}>{item}</li> : ""
+                    item.length ? (
+                      <li key={index}>{instructionsList[item]}</li>
+                    ) : (
+                      ""
+                    )
                   )}
                 </>
               ),
@@ -57,10 +62,15 @@ const Rules = ({ fetchRules, rules, rulesLoading }) => {
             {
               title: "Can Come After",
               field: "can_come_after",
+              lookup: instructionsList,
               render: (rowData) => (
                 <>
                   {rowData.can_come_after.map((item, index) =>
-                    item.length ? <li key={index}>{item}</li> : ""
+                    item.length ? (
+                      <li key={index}>{instructionsList[item]}</li>
+                    ) : (
+                      ""
+                    )
                   )}
                 </>
               ),
@@ -68,10 +78,15 @@ const Rules = ({ fetchRules, rules, rulesLoading }) => {
             {
               title: "Cannot Come Before",
               field: "cannot_come_before",
+              lookup: instructionsList,
               render: (rowData) => (
                 <>
                   {rowData.cannot_come_before.map((item, index) =>
-                    item.length ? <li key={index}>{item}</li> : ""
+                    item.length ? (
+                      <li key={index}>{instructionsList[item]}</li>
+                    ) : (
+                      ""
+                    )
                   )}
                 </>
               ),
@@ -79,10 +94,15 @@ const Rules = ({ fetchRules, rules, rulesLoading }) => {
             {
               title: "Cannot Come After",
               field: "cannot_come_after",
+              lookup: instructionsList,
               render: (rowData) => (
                 <>
                   {rowData.cannot_come_after.map((item, index) =>
-                    item.length ? <li key={index}>{item}</li> : ""
+                    item.length ? (
+                      <li key={index}>{instructionsList[item]}</li>
+                    ) : (
+                      ""
+                    )
                   )}
                 </>
               ),
@@ -101,6 +121,26 @@ const Rules = ({ fetchRules, rules, rulesLoading }) => {
               new Promise((resolve) => {
                 setTimeout(() => {
                   resolve();
+                  if (oldData.can_come_before) {
+                    let canComeBeforeArray = [...oldData.can_come_before];
+                    canComeBeforeArray.push(newData.can_come_before);
+                    newData.can_come_before = canComeBeforeArray;
+                  }
+                  if (oldData.can_come_after) {
+                    let canComeAfterArray = [...oldData.can_come_after];
+                    canComeAfterArray.push(newData.can_come_after);
+                    newData.can_come_after = canComeAfterArray;
+                  }
+                  if (oldData.cannot_come_before) {
+                    let cannotComeBeforeArray = [...oldData.cannot_come_before];
+                    cannotComeBeforeArray.push(newData.cannot_come_before);
+                    newData.cannot_come_before = cannotComeBeforeArray;
+                  }
+                  if (oldData.cannot_come_after) {
+                    let cannotComeAfterArray = [...oldData.cannot_come_after];
+                    cannotComeAfterArray.push(newData.cannot_come_after);
+                    newData.cannot_come_after = cannotComeAfterArray;
+                  }
                   updateTheRule(newData);
                 }, 600);
               }),

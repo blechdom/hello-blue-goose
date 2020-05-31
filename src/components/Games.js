@@ -57,19 +57,57 @@ const Games = ({
               field: "colors",
               lookup: colors,
               render: (rowData) => {
-                console.log("rowData ", rowData);
                 return (
                   <>
                     {rowData.colors.map((item, index) =>
-                      item.length ? <li key={index}>{item}</li> : ""
+                      item.length ? <li key={index}>{colors[item]}</li> : ""
                     )}
                   </>
                 );
               },
             },
-            { title: "Shapes", field: "shapes", lookup: shapes },
-            { title: "Categories", field: "categories", lookup: categories },
-            { title: "Things", field: "things", lookup: things },
+            {
+              title: "Shapes",
+              field: "shapes",
+              lookup: shapes,
+              render: (rowData) => {
+                return (
+                  <>
+                    {rowData.shapes.map((item, index) =>
+                      item.length ? <li key={index}>{shapes[item]}</li> : ""
+                    )}
+                  </>
+                );
+              },
+            },
+            {
+              title: "Categories",
+              field: "categories",
+              lookup: categories,
+              render: (rowData) => {
+                return (
+                  <>
+                    {rowData.categories.map((item, index) =>
+                      item.length ? <li key={index}>{categories[item]}</li> : ""
+                    )}
+                  </>
+                );
+              },
+            },
+            {
+              title: "Things",
+              field: "things",
+              lookup: things,
+              render: (rowData) => {
+                return (
+                  <>
+                    {rowData.things.map((item, index) =>
+                      item.length ? <li key={index}>{things[item]}</li> : ""
+                    )}
+                  </>
+                );
+              },
+            },
           ]}
           data={games}
           editable={{

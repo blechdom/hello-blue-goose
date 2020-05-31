@@ -24,6 +24,7 @@ const Make = () => {
   const [shapes, setShapes] = useState({});
   const [categories, setCategories] = useState({});
   const [things, setThings] = useState({});
+  const [instructionsList, setInstructionsList] = useState([]);
   const [gamesLoading, setGamesLoading] = useState(false);
   const [instructionsLoading, setInstructionsLoading] = useState(false);
   const [rulesLoading, setRulesLoading] = useState(false);
@@ -34,11 +35,30 @@ const Make = () => {
   const [unitsInit, setUnitsInit] = useState(false);
 
   useEffect(() => {
+    if (!unitsInit) {
+      fetchUnits();
+    } else {
+      setUnitsLoading(false);
+      parseUnitsForGames();
+    }
+  }, [unitsInit]);
+
+  useEffect(() => {
     if (!gamesInit) fetchGames();
-    if (!unitsInit) fetchUnits();
-    if (!instructionsInit) fetchInstructions();
+  }, [colors, shapes, categories, things, gamesInit]);
+
+  useEffect(() => {
+    if (!instructionsInit) {
+      fetchInstructions();
+    } else {
+      setInstructionsLoading(false);
+      parseInstructionsForRules();
+    }
+  }, [instructionsInit]);
+
+  useEffect(() => {
     if (!rulesInit) fetchRules();
-  });
+  }, [instructionsList, rulesInit]);
 
   const fetchGames = async () => {
     setGamesLoading(true);
@@ -61,8 +81,6 @@ const Make = () => {
       const unitsData = unitData.data.listUnits.items;
       setUnits(unitsData);
       setUnitsInit(true);
-      setUnitsLoading(false);
-      parseUnitsForGames();
     } catch (err) {
       console.log("error fetching units");
       setUnitsLoading(false);
@@ -100,7 +118,6 @@ const Make = () => {
   };
 
   const parseUnitsForGames = () => {
-    console.log("parse Uhnits for Games", units);
     const gameColors = units.reduce(
       (a, o) => (o.unit_type === "color" && (a[o.id] = o.name), a),
       {}
@@ -121,6 +138,15 @@ const Make = () => {
       {}
     );
     setThings(gameThings);
+  };
+  const parseInstructionsForRules = () => {
+    console.log("parse instructions for rules", instructions);
+    const instructionsForList = instructions.reduce(
+      (a, o) => ((a[o.id] = o.name), a),
+      {}
+    );
+    console.log("instructions for list ", instructionsForList);
+    setInstructionsList(instructionsForList);
   };
 
   const [value, setValue] = useState(0);
@@ -156,6 +182,7 @@ const Make = () => {
             fetchRules={fetchRules}
             rules={rules}
             rulesLoading={rulesLoading}
+            instructionsList={instructionsList}
           />
         );
         break;
