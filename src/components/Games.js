@@ -124,22 +124,27 @@ const Games = ({
                   resolve();
                   if (oldData.colors) {
                     let colorsArray = [...oldData.colors];
-                    colorsArray.push(newData.colors);
+                    if (typeof newData.colors === "string")
+                      colorsArray.push(newData.colors);
                     newData.colors = colorsArray;
                   }
                   if (oldData.shapes) {
                     let shapesArray = [...oldData.shapes];
-                    shapesArray.push(newData.shapes);
+                    if (typeof newData.shapes === "string")
+                      shapesArray.push(newData.shapes);
                     newData.shapes = shapesArray;
                   }
                   if (oldData.categories) {
                     let categoriesArray = [...oldData.categories];
-                    categoriesArray.push(newData.categories);
+                    if (typeof newData.categories === "string")
+                      categoriesArray.push(newData.categories);
                     newData.categories = categoriesArray;
                   }
                   if (oldData.things) {
                     let thingsArray = [...oldData.things];
-                    thingsArray.push(newData.things);
+                    console.log("newData ", typeof newData.things);
+                    if (typeof newData.things === "string")
+                      thingsArray.push(newData.things);
                     newData.things = thingsArray;
                   }
                   updateTheGame(newData);

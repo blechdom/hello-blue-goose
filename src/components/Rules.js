@@ -123,22 +123,26 @@ const Rules = ({ fetchRules, rules, rulesLoading, instructionsList }) => {
                   resolve();
                   if (oldData.can_come_before) {
                     let canComeBeforeArray = [...oldData.can_come_before];
-                    canComeBeforeArray.push(newData.can_come_before);
+                    if (typeof newData.can_come_before === "string")
+                      canComeBeforeArray.push(newData.can_come_before);
                     newData.can_come_before = canComeBeforeArray;
                   }
                   if (oldData.can_come_after) {
                     let canComeAfterArray = [...oldData.can_come_after];
-                    canComeAfterArray.push(newData.can_come_after);
+                    if (typeof newData.can_come_after === "string")
+                      canComeAfterArray.push(newData.can_come_after);
                     newData.can_come_after = canComeAfterArray;
                   }
                   if (oldData.cannot_come_before) {
                     let cannotComeBeforeArray = [...oldData.cannot_come_before];
-                    cannotComeBeforeArray.push(newData.cannot_come_before);
+                    if (typeof newData.cannot_come_before === "string")
+                      cannotComeBeforeArray.push(newData.cannot_come_before);
                     newData.cannot_come_before = cannotComeBeforeArray;
                   }
                   if (oldData.cannot_come_after) {
                     let cannotComeAfterArray = [...oldData.cannot_come_after];
-                    cannotComeAfterArray.push(newData.cannot_come_after);
+                    if (typeof newData.cannot_come_after === "string")
+                      cannotComeAfterArray.push(newData.cannot_come_after);
                     newData.cannot_come_after = cannotComeAfterArray;
                   }
                   updateTheRule(newData);
