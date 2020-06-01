@@ -6,6 +6,9 @@ type Game @model {
   shapes: [String]
   categories: [String]
   things: [String]
+  actions: [String]
+  effects: [String]
+  variables: [String]
 }
 
 type Instruction @model {
@@ -32,4 +35,7 @@ type Unit @model {
   category: String
   svg: String
   hex_color: String
+  image_url: String
+  sound_url: String
+  spoken_text: String
 }

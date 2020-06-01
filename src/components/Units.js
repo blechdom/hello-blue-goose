@@ -8,6 +8,9 @@ const unit_types = {
   shape: "shape",
   category: "category",
   thing: "thing",
+  action: "action",
+  effect: "effect",
+  variable: "variable",
 };
 
 const Units = ({ fetchUnits, units, unitsLoading, categories }) => {
@@ -54,6 +57,9 @@ const Units = ({ fetchUnits, units, unitsLoading, categories }) => {
             { title: "Name", field: "name" },
             { title: "SVG", field: "svg" },
             { title: "Hex Color", field: "hex_color" },
+            { title: "Image URL", field: "image_url" },
+            { title: "Spoken Text", field: "spoken_text" },
+            { title: "Sound URL", field: "sound_url" },
           ]}
           data={units}
           editable={{
