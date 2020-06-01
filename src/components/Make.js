@@ -19,37 +19,26 @@ const Make = () => {
   const [games, setGames] = useState([]);
   const [rules, setRules] = useState([]);
   const [instructions, setInstructions] = useState([]);
-  const [colors, setColors] = useState([]);
-  const [shapes, setShapes] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [things, setThings] = useState([]);
   const [units, setUnits] = useState([]);
-  const [gamesLoading, setGamesLoading] = useState(true);
+  const [colors, setColors] = useState({});
+  const [shapes, setShapes] = useState({});
+  const [categories, setCategories] = useState({});
+  const [things, setThings] = useState({});
+  const [gamesLoading, setGamesLoading] = useState(false);
   const [instructionsLoading, setInstructionsLoading] = useState(false);
   const [rulesLoading, setRulesLoading] = useState(false);
   const [unitsLoading, setUnitsLoading] = useState(false);
+  const [gamesInit, setGamesInit] = useState(false);
+  const [instructionsInit, setInstructionsInit] = useState(false);
+  const [rulesInit, setRulesInit] = useState(false);
+  const [unitsInit, setUnitsInit] = useState(false);
 
   useEffect(() => {
-    if (units.length) {
-      setUnitsLoading(false);
-      if (games.length) {
-        setGamesLoading(false);
-        parseUnitsForGames();
-      } else {
-        fetchGames();
-      }
-    } else {
-      fetchUnits();
-    }
-  }, [games, units]);
-
-  useEffect(() => {
-    !instructions.length ? fetchInstructions() : setInstructionsLoading(false);
-  }, [instructions]);
-
-  useEffect(() => {
-    !rules.length ? fetchRules() : setRulesLoading(false);
-  }, [rules]);
+    if (!gamesInit) fetchGames();
+    if (!unitsInit) fetchUnits();
+    if (!instructionsInit) fetchInstructions();
+    if (!rulesInit) fetchRules();
+  });
 
   const fetchGames = async () => {
     setGamesLoading(true);
@@ -57,6 +46,8 @@ const Make = () => {
       const gameData = await API.graphql(graphqlOperation(listGames));
       const gamesData = gameData.data.listGames.items;
       setGames(gamesData);
+      setGamesInit(true);
+      setGamesLoading(false);
     } catch (err) {
       console.log("error fetching games");
       setGamesLoading(false);
@@ -69,6 +60,9 @@ const Make = () => {
       const unitData = await API.graphql(graphqlOperation(listUnits));
       const unitsData = unitData.data.listUnits.items;
       setUnits(unitsData);
+      setUnitsInit(true);
+      setUnitsLoading(false);
+      parseUnitsForGames();
     } catch (err) {
       console.log("error fetching units");
       setUnitsLoading(false);
@@ -76,7 +70,6 @@ const Make = () => {
   };
 
   const fetchInstructions = async () => {
-    console.log("fetching instructions ");
     setInstructionsLoading(true);
     try {
       const instructionData = await API.graphql(
@@ -84,6 +77,8 @@ const Make = () => {
       );
       const instructionsData = instructionData.data.listInstructions.items;
       setInstructions(instructionsData);
+      setInstructionsInit(true);
+      setInstructionsLoading(false);
     } catch (err) {
       console.log("error fetching instructions");
       setInstructionsLoading(false);
@@ -96,6 +91,8 @@ const Make = () => {
       const ruleData = await API.graphql(graphqlOperation(listRules));
       const rulesData = ruleData.data.listRules.items;
       setRules(rulesData);
+      setRulesInit(true);
+      setRulesLoading(false);
     } catch (err) {
       console.log("error fetching rules");
       setRulesLoading(false);
@@ -103,6 +100,7 @@ const Make = () => {
   };
 
   const parseUnitsForGames = () => {
+    console.log("parse Uhnits for Games", units);
     const gameColors = units.reduce(
       (a, o) => (o.unit_type === "color" && (a[o.id] = o.name), a),
       {}
