@@ -11,6 +11,9 @@ export const getGame = /* GraphQL */ `
       shapes
       categories
       things
+      actions
+      effects
+      variables
       createdAt
       updatedAt
     }
@@ -31,6 +34,9 @@ export const listGames = /* GraphQL */ `
         shapes
         categories
         things
+        actions
+        effects
+        variables
         createdAt
         updatedAt
       }
@@ -115,6 +121,9 @@ export const getUnit = /* GraphQL */ `
       category
       svg
       hex_color
+      image_url
+      sound_url
+      spoken_text
       createdAt
       updatedAt
     }
@@ -134,6 +143,9 @@ export const listUnits = /* GraphQL */ `
         category
         svg
         hex_color
+        image_url
+        sound_url
+        spoken_text
         createdAt
         updatedAt
       }

@@ -16,6 +16,8 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
 const Make = () => {
+  const [value, setValue] = useState(0);
+  const [tabContent, setTabContent] = useState();
   const [games, setGames] = useState([]);
   const [rules, setRules] = useState([]);
   const [instructions, setInstructions] = useState([]);
@@ -24,6 +26,9 @@ const Make = () => {
   const [shapes, setShapes] = useState({});
   const [categories, setCategories] = useState({});
   const [things, setThings] = useState({});
+  const [actions, setActions] = useState({});
+  const [effects, setEffects] = useState({});
+  const [variables, setVariables] = useState({});
   const [instructionsList, setInstructionsList] = useState([]);
   const [gamesLoading, setGamesLoading] = useState(false);
   const [instructionsLoading, setInstructionsLoading] = useState(false);
@@ -116,41 +121,37 @@ const Make = () => {
       setRulesLoading(false);
     }
   };
+  const reduceFromUnits = (unit_type) => {
+    return units.reduce((a, o) => {
+      o.unit_type === unit_type && (a[o.id] = o.name);
+      return a;
+    }, {});
+  };
 
   const parseUnitsForGames = () => {
-    const gameColors = units.reduce(
-      (a, o) => (o.unit_type === "color" && (a[o.id] = o.name), a),
-      {}
-    );
+    const gameColors = reduceFromUnits("color");
     setColors(gameColors);
-    const gameShapes = units.reduce(
-      (a, o) => (o.unit_type === "shape" && (a[o.id] = o.name), a),
-      {}
-    );
+    const gameShapes = reduceFromUnits("shape");
     setShapes(gameShapes);
-    const gameCategories = units.reduce(
-      (a, o) => (o.unit_type === "category" && (a[o.id] = o.name), a),
-      {}
-    );
+    const gameCategories = reduceFromUnits("category");
     setCategories(gameCategories);
-    const gameThings = units.reduce(
-      (a, o) => (o.unit_type === "thing" && (a[o.id] = o.name), a),
-      {}
-    );
+    const gameThings = reduceFromUnits("thing");
     setThings(gameThings);
-  };
-  const parseInstructionsForRules = () => {
-    console.log("parse instructions for rules", instructions);
-    const instructionsForList = instructions.reduce(
-      (a, o) => ((a[o.id] = o.name), a),
-      {}
-    );
-    console.log("instructions for list ", instructionsForList);
-    setInstructionsList(instructionsForList);
+    const gameActions = reduceFromUnits("action");
+    setActions(gameActions);
+    const gameEffects = reduceFromUnits("effect");
+    setEffects(gameEffects);
+    const gameVariables = reduceFromUnits("variable");
+    setVariables(gameVariables);
   };
 
-  const [value, setValue] = useState(0);
-  const [tabContent, setTabContent] = useState();
+  const parseInstructionsForRules = () => {
+    const instructionsForList = instructions.reduce((a, o) => {
+      a[o.id] = o.name;
+      return a;
+    }, {});
+    setInstructionsList(instructionsForList);
+  };
 
   useEffect(() => {
     switch (value) {
@@ -164,25 +165,28 @@ const Make = () => {
             shapes={shapes}
             categories={categories}
             things={things}
+            actions={actions}
+            effects={effects}
+            variables={variables}
           />
         );
         break;
       case 1:
-        setTabContent(
-          <Instructions
-            fetchInstructions={fetchInstructions}
-            instructions={instructions}
-            instructionsLoading={instructionsLoading}
-          />
-        );
-        break;
-      case 2:
         setTabContent(
           <Rules
             fetchRules={fetchRules}
             rules={rules}
             rulesLoading={rulesLoading}
             instructionsList={instructionsList}
+          />
+        );
+        break;
+      case 2:
+        setTabContent(
+          <Instructions
+            fetchInstructions={fetchInstructions}
+            instructions={instructions}
+            instructionsLoading={instructionsLoading}
           />
         );
         break;
@@ -206,9 +210,16 @@ const Make = () => {
     rulesLoading,
     instructionsLoading,
     colors,
+    categories,
+    instructionsList,
+    shapes,
+    things,
     games,
     instructions,
     rules,
+    effects,
+    variables,
+    actions,
     units,
   ]);
 
@@ -229,8 +240,8 @@ const Make = () => {
         centered
       >
         <Tab label="Games" />
-        <Tab label="Instructions" />
         <Tab label="Rules" />
+        <Tab label="Instructions" />
         <Tab label="Units" />
       </Tabs>
       <Box display="flex" justifyContent="center" m={2} p={2}>

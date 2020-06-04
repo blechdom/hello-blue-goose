@@ -11,6 +11,9 @@ const Games = ({
   shapes,
   categories,
   things,
+  effects,
+  actions,
+  variables,
 }) => {
   async function addGame(game) {
     try {
@@ -57,13 +60,15 @@ const Games = ({
               field: "colors",
               lookup: colors,
               render: (rowData) => {
-                return (
-                  <>
-                    {rowData.colors.map((item, index) =>
-                      item.length ? <li key={index}>{colors[item]}</li> : ""
-                    )}
-                  </>
-                );
+                if (rowData.colors) {
+                  return (
+                    <>
+                      {rowData.colors.map((item, index) =>
+                        item.length ? <li key={index}>{colors[item]}</li> : ""
+                      )}
+                    </>
+                  );
+                } else return;
               },
             },
             {
@@ -71,13 +76,15 @@ const Games = ({
               field: "shapes",
               lookup: shapes,
               render: (rowData) => {
-                return (
-                  <>
-                    {rowData.shapes.map((item, index) =>
-                      item.length ? <li key={index}>{shapes[item]}</li> : ""
-                    )}
-                  </>
-                );
+                if (rowData.shapes) {
+                  return (
+                    <>
+                      {rowData.shapes.map((item, index) =>
+                        item.length ? <li key={index}>{shapes[item]}</li> : ""
+                      )}
+                    </>
+                  );
+                } else return;
               },
             },
             {
@@ -85,13 +92,19 @@ const Games = ({
               field: "categories",
               lookup: categories,
               render: (rowData) => {
-                return (
-                  <>
-                    {rowData.categories.map((item, index) =>
-                      item.length ? <li key={index}>{categories[item]}</li> : ""
-                    )}
-                  </>
-                );
+                if (rowData.categories) {
+                  return (
+                    <>
+                      {rowData.categories.map((item, index) =>
+                        item.length ? (
+                          <li key={index}>{categories[item]}</li>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </>
+                  );
+                } else return;
               },
             },
             {
@@ -99,13 +112,67 @@ const Games = ({
               field: "things",
               lookup: things,
               render: (rowData) => {
-                return (
-                  <>
-                    {rowData.things.map((item, index) =>
-                      item.length ? <li key={index}>{things[item]}</li> : ""
-                    )}
-                  </>
-                );
+                if (rowData.things) {
+                  return (
+                    <>
+                      {rowData.things.map((item, index) =>
+                        item.length ? <li key={index}>{things[item]}</li> : ""
+                      )}
+                    </>
+                  );
+                } else return;
+              },
+            },
+            {
+              title: "Actions",
+              field: "actions",
+              lookup: actions,
+              render: (rowData) => {
+                if (rowData.actions) {
+                  return (
+                    <>
+                      {rowData.actions.map((item, index) =>
+                        item.length ? <li key={index}>{actions[item]}</li> : ""
+                      )}
+                    </>
+                  );
+                } else return;
+              },
+            },
+            {
+              title: "Effects",
+              field: "effects",
+              lookup: effects,
+              render: (rowData) => {
+                if (rowData.effects) {
+                  return (
+                    <>
+                      {rowData.effects.map((item, index) =>
+                        item.length ? <li key={index}>{effects[item]}</li> : ""
+                      )}
+                    </>
+                  );
+                } else return;
+              },
+            },
+            {
+              title: "Variables",
+              field: "variables",
+              lookup: variables,
+              render: (rowData) => {
+                if (rowData.variables) {
+                  return (
+                    <>
+                      {rowData.variables.map((item, index) =>
+                        item.length ? (
+                          <li key={index}>{variables[item]}</li>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </>
+                  );
+                } else return;
               },
             },
           ]}
@@ -142,10 +209,27 @@ const Games = ({
                   }
                   if (oldData.things) {
                     let thingsArray = [...oldData.things];
-                    console.log("newData ", typeof newData.things);
                     if (typeof newData.things === "string")
                       thingsArray.push(newData.things);
                     newData.things = thingsArray;
+                  }
+                  if (oldData.actions) {
+                    let actionsArray = [...oldData.actions];
+                    if (typeof newData.actions === "string")
+                      actionsArray.push(newData.actions);
+                    newData.actions = actionsArray;
+                  }
+                  if (oldData.effects) {
+                    let effectsArray = [...oldData.effects];
+                    if (typeof newData.effects === "string")
+                      effectsArray.push(newData.effects);
+                    newData.effects = effectsArray;
+                  }
+                  if (oldData.variables) {
+                    let variablesArray = [...oldData.variables];
+                    if (typeof newData.variables === "string")
+                      variablesArray.push(newData.variables);
+                    newData.variables = variablesArray;
                   }
                   updateTheGame(newData);
                 }, 600);

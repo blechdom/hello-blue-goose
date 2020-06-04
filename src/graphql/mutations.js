@@ -14,6 +14,9 @@ export const createGame = /* GraphQL */ `
       shapes
       categories
       things
+      actions
+      effects
+      variables
       createdAt
       updatedAt
     }
@@ -32,6 +35,9 @@ export const updateGame = /* GraphQL */ `
       shapes
       categories
       things
+      actions
+      effects
+      variables
       createdAt
       updatedAt
     }
@@ -50,6 +56,9 @@ export const deleteGame = /* GraphQL */ `
       shapes
       categories
       things
+      actions
+      effects
+      variables
       createdAt
       updatedAt
     }
@@ -166,6 +175,9 @@ export const createUnit = /* GraphQL */ `
       category
       svg
       hex_color
+      image_url
+      sound_url
+      spoken_text
       createdAt
       updatedAt
     }
@@ -183,6 +195,9 @@ export const updateUnit = /* GraphQL */ `
       category
       svg
       hex_color
+      image_url
+      sound_url
+      spoken_text
       createdAt
       updatedAt
     }
@@ -200,6 +215,9 @@ export const deleteUnit = /* GraphQL */ `
       category
       svg
       hex_color
+      image_url
+      sound_url
+      spoken_text
       createdAt
       updatedAt
     }
