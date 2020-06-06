@@ -35,6 +35,7 @@ const Games = ({
       console.log("error updating game:", err);
     }
   }
+
   async function removeGame(id) {
     try {
       await API.graphql(graphqlOperation(deleteGame, { input: { id } }));
@@ -42,6 +43,20 @@ const Games = ({
     } catch (err) {
       console.log("error deleting game:", err);
     }
+  }
+
+  function getRowList(rowData, unit_type, unit_list) {
+    if (rowData[unit_type]) {
+      return (
+        <>
+          {rowData[unit_type].map((item, index) => {
+            if (item.length) {
+              return <li key={index}>{unit_list[item]}</li>;
+            } else return <></>;
+          })}
+        </>
+      );
+    } else return;
   }
 
   return (
@@ -59,121 +74,44 @@ const Games = ({
               title: "Colors",
               field: "colors",
               lookup: colors,
-              render: (rowData) => {
-                if (rowData.colors) {
-                  return (
-                    <>
-                      {rowData.colors.map((item, index) =>
-                        item.length ? <li key={index}>{colors[item]}</li> : ""
-                      )}
-                    </>
-                  );
-                } else return;
-              },
+              render: (rowData) => getRowList(rowData, "colors", colors),
             },
             {
               title: "Shapes",
               field: "shapes",
               lookup: shapes,
-              render: (rowData) => {
-                if (rowData.shapes) {
-                  return (
-                    <>
-                      {rowData.shapes.map((item, index) =>
-                        item.length ? <li key={index}>{shapes[item]}</li> : ""
-                      )}
-                    </>
-                  );
-                } else return;
-              },
+              render: (rowData) => getRowList(rowData, "shapes", shapes),
             },
             {
               title: "Categories",
               field: "categories",
               lookup: categories,
-              render: (rowData) => {
-                if (rowData.categories) {
-                  return (
-                    <>
-                      {rowData.categories.map((item, index) =>
-                        item.length ? (
-                          <li key={index}>{categories[item]}</li>
-                        ) : (
-                          ""
-                        )
-                      )}
-                    </>
-                  );
-                } else return;
-              },
+              render: (rowData) =>
+                getRowList(rowData, "categories", categories),
             },
             {
               title: "Things",
               field: "things",
               lookup: things,
-              render: (rowData) => {
-                if (rowData.things) {
-                  return (
-                    <>
-                      {rowData.things.map((item, index) =>
-                        item.length ? <li key={index}>{things[item]}</li> : ""
-                      )}
-                    </>
-                  );
-                } else return;
-              },
+              render: (rowData) => getRowList(rowData, "things", things),
             },
             {
               title: "Actions",
               field: "actions",
               lookup: actions,
-              render: (rowData) => {
-                if (rowData.actions) {
-                  return (
-                    <>
-                      {rowData.actions.map((item, index) =>
-                        item.length ? <li key={index}>{actions[item]}</li> : ""
-                      )}
-                    </>
-                  );
-                } else return;
-              },
+              render: (rowData) => getRowList(rowData, "actions", actions),
             },
             {
               title: "Effects",
               field: "effects",
               lookup: effects,
-              render: (rowData) => {
-                if (rowData.effects) {
-                  return (
-                    <>
-                      {rowData.effects.map((item, index) =>
-                        item.length ? <li key={index}>{effects[item]}</li> : ""
-                      )}
-                    </>
-                  );
-                } else return;
-              },
+              render: (rowData) => getRowList(rowData, "effects", effects),
             },
             {
               title: "Variables",
               field: "variables",
               lookup: variables,
-              render: (rowData) => {
-                if (rowData.variables) {
-                  return (
-                    <>
-                      {rowData.variables.map((item, index) =>
-                        item.length ? (
-                          <li key={index}>{variables[item]}</li>
-                        ) : (
-                          ""
-                        )
-                      )}
-                    </>
-                  );
-                } else return;
-              },
+              render: (rowData) => getRowList(rowData, "variables", variables),
             },
           ]}
           data={games}

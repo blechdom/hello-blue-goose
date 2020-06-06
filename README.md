@@ -7,10 +7,9 @@
 ## Tools
 
 - AWS Amplify
-- AWS Lambda
 - AWS DynamoDB
 - API Gateway
 - GraphQL
 - Create-React-App
 - Material-UI
-- Axios
+- Material-Table
